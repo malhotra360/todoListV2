@@ -7,15 +7,6 @@ const _ = require("lodash");
 
 const app = express();
 
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.log(error);
-    process.exit(1);
-  }
-}
 
 app.set('view engine', 'ejs');
 
@@ -23,8 +14,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 mongoose.set("strictQuery", false);
-mongoose.connect("mongodb+srv://ruknA:google13@cluster0.ubqvvtr.mongodb.net/todolistDB", {useNewUrlParser: true});
+// mongoose.connect("mongodb+srv://ruknA:google13@cluster0.ubqvvtr.mongodb.net/todolistDB", {useNewUrlParser: true});
 
+const connectDB = async () => {
+  try {
+    mongoose.connect("mongodb+srv://ruknA:google13@cluster0.ubqvvtr.mongodb.net/todolistDB", {useNewUrlParser: true});
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
 const itemsSchema = {
   name: String
@@ -148,17 +147,23 @@ app.get("/about", function(req, res){
   res.render("about");
 });
 
+//Routes go here
+app.all('*', (req,res) => {
+    res.json({"every thing":"is awesome"})
+})
 
-                let port = process.env.PORT;
-                if (port == null || port == "") {
-                  port = 3000;
-                }
+                const PORT = process.env.PORT || 3000
+                // if (port == null || port == "") {
+                //   port = 3000;
+                // }
+
+                connectDB().then(() => {
+                  app.listen(PORT, () => {
+                    console.log("listening for requests");
+                    })
+                  })
 
 
-                //Routes go here
-                app.all('*', (req,res) => {
-                    res.json({"every thing":"is awesome"})
-                })
-app.listen(port, function() {
-  console.log("Server started successfully");
-});
+// app.listen(port, function() {
+//   console.log("Server started successfully");
+// });
