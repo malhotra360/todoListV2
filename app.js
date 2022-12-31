@@ -7,6 +7,15 @@ const _ = require("lodash");
 
 const app = express();
 
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.log(error);
+    process.exit(1);
+  }
+}
 
 app.set('view engine', 'ejs');
 
@@ -151,5 +160,5 @@ app.get("/about", function(req, res){
                     res.json({"every thing":"is awesome"})
                 })
 app.listen(port, function() {
-  console.log("Server started on port 3000 successfully");
+  console.log("Server started successfully");
 });
