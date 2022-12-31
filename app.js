@@ -18,7 +18,8 @@ mongoose.set("strictQuery", false);
 
 const connectDB = async () => {
   try {
-    mongoose.connect("mongodb+srv://ruknA:google13@cluster0.ubqvvtr.mongodb.net/todolistDB", {useNewUrlParser: true});
+    const conn = await mongoose.connect("mongodb+srv://ruknA:google13@cluster0.ubqvvtr.mongodb.net/todolistDB", {useNewUrlParser: true});
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
     process.exit(1);
