@@ -140,17 +140,6 @@ app.get("/about", function(req, res){
 });
 
 
-          //Routes go here
-          app.all('*', (req,res) => {
-          res.json({"every thing":"is awesome"})
-          })
-
-          //Connect to the database before listening
-          connectDB().then(() => {
-          app.listen(PORT, () => {
-          console.log("listening for requests");
-          })
-          })
                 let port = process.env.PORT;
                 if (port == null || port == "") {
                   port = 3000;
