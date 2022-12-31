@@ -146,7 +146,10 @@ app.get("/about", function(req, res){
                 }
 
 
-
+                //Routes go here
+                app.all('*', (req,res) => {
+                    res.json({"every thing":"is awesome"})
+                })
 app.listen(port, function() {
   console.log("Server started on port 3000 successfully");
 });
